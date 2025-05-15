@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GlobalResponseEntity {
-    public ResponseEntity<BillResponse> mapEntityToResponseDto(Bill bill){
+    public ResponseEntity<BillResponse> ok(Bill bill){
         return ResponseEntity.ok(
                 new BillResponse(
                         bill.getBillId(),
