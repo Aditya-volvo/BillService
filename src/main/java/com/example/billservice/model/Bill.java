@@ -18,6 +18,7 @@ import java.util.List;
 public class Bill {
     @Id
     @Column(name = "bill_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long billId;
 
     @Column(name = "total_amount")
