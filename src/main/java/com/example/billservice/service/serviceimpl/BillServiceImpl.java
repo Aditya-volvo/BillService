@@ -2,6 +2,7 @@ package com.example.billservice.service.serviceimpl;
 
 import com.example.billservice.dto.BillRequest;
 import com.example.billservice.dto.BillResponse;
+import com.example.billservice.exception.BillNotFoundException;
 import com.example.billservice.mapper.GlobalMapper;
 import com.example.billservice.model.Bill;
 import com.example.billservice.repository.BillRepository;
@@ -37,13 +38,17 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public ResponseEntity<BillResponse> getBillById(Long billId) {
-        Bill bill = billRepository.findById(billId).orElseThrow();
+        Bill bill = billRepository.findById(billId)
+                .orElseThrow(()-> new BillNotFoundException("Bill with Id:"+billId+"not found"));
         return globalResponseEntity.ok(bill);
     }
 
     @Override
     public List<BillResponse> getBillByPatientId(Long patientId) {
         List<Bill> bills = billRepository.findBillsByPatientsId(patientId) ;
+        if(bills == null){
+            throw new BillNotFoundException("Bill with patientId:"+patientId+"not Found");
+        }
         return bills.stream().map(globalMapper::mapRepositoryToResponse).toList();
     }
 }
