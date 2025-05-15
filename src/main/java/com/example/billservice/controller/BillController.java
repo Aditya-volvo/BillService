@@ -27,7 +27,11 @@ public class BillController {
     }
 
     @GetMapping("/{billId}")
-    public ResponseEntity<BillResponse> getBillById(@PathVariable billId){
+    public ResponseEntity<BillResponse> getBillById(@PathVariable Long billId){
+      return  billService.getBillById(billId);
+    }
 
+    public List<BillResponse> getBillByPatientsId(@PathVariable Long patientId){
+        return billService.getBillByPatientId(patientId);
     }
 }
