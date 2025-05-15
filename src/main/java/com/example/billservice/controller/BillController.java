@@ -5,9 +5,9 @@ import com.example.billservice.service.BillService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bill")
@@ -16,7 +16,18 @@ public class BillController {
 
     private final BillService billService;
 
+    @PostMapping
     public ResponseEntity<BillResponse> generateBill(@Valid @RequestBody BillRequest billRequest){
        return billService.generateBill(billRequest);
+    }
+
+    @GetMapping
+    public List<BillResponse> getAllBill(){
+        return billService.getAllBill();
+    }
+
+    @GetMapping("/{billId}")
+    public ResponseEntity<BillResponse> getBillById(@PathVariable billId){
+
     }
 }
