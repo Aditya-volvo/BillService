@@ -25,7 +25,7 @@ public class BillServiceImpl implements BillService {
     public ResponseEntity<BillResponse> generateBill(BillRequest billRequest) {
         Bill bill = globalMapper.mapDtoToEntity(billRequest);
         Bill saved = billRepository.save(bill);
-        return globalResponseEntity.mapEntityToResponseDto(saved);
+        return globalResponseEntity.ok(saved);
     }
 
     @Override
@@ -33,5 +33,17 @@ public class BillServiceImpl implements BillService {
         List<Bill> bills = billRepository.findAll();
         return bills.stream().map(globalMapper::mapRepositoryToResponse).toList();
 
+    }
+
+    @Override
+    public ResponseEntity<BillResponse> getBillById(Long billId) {
+        Bill bill = billRepository.findById(billId).orElseThrow();
+        return globalResponseEntity.ok(bill);
+    }
+
+    @Override
+    public List<BillResponse> getBillByPatientId(Long patientId) {
+        List<Bill> bills = billRepository.findBillsByPatientsId(patientId) ;
+        return bills.stream().map(globalMapper::mapRepositoryToResponse).toList();
     }
 }

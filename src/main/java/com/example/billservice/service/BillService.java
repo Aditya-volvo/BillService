@@ -11,4 +11,8 @@ public interface BillService {
     ResponseEntity<BillResponse> generateBill(@Valid BillRequest billRequest);
 
    List<BillResponse> getAllBill();
+
+    ResponseEntity<BillResponse> getBillById(Long billId);
+
+    List<BillResponse> getBillByPatientId(Long patientId);
 }
