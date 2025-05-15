@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BillServiceImpl implements BillService {
@@ -24,5 +26,12 @@ public class BillServiceImpl implements BillService {
         Bill bill = globalMapper.mapDtoToEntity(billRequest);
         Bill saved = billRepository.save(bill);
         return globalResponseEntity.mapEntityToResponseDto(saved);
+    }
+
+    @Override
+    public List<BillResponse>  getAllBill() {
+        List<Bill> bills = billRepository.findAll();
+        return bills.stream().map(globalMapper::mapRepositoryToResponse).toList();
+
     }
 }
