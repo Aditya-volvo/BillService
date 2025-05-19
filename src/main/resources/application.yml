@@ -1,1 +1,11 @@
-spring.application.name=BillService
+spring:
+  application:
+    name: BillService
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
